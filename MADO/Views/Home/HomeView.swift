@@ -4,7 +4,7 @@ import Charts
 struct HomeView: View {
     @State private var viewModel = HomeViewModel()
     @State private var showSession = false
-    let theme = ThemeManager.shared
+    @Bindable var theme = ThemeManager.shared
 
     var body: some View {
         NavigationStack {
@@ -18,6 +18,7 @@ struct HomeView: View {
                     if !viewModel.thresholdHistory.isEmpty {
                         miniChart
                     }
+                    disclaimerFooter
                 }
                 .padding()
             }
@@ -71,23 +72,41 @@ struct HomeView: View {
                 Circle()
                     .fill(theme.accent)
                     .frame(width: 40, height: 40)
-                Text("\(viewModel.windowScore)")
-                    .font(.title2.bold())
-                    .foregroundStyle(.white)
+
+                if viewModel.latestThreshold != nil {
+                    Text("\(viewModel.windowScore)")
+                        .font(.title2.bold())
+                        .foregroundStyle(.white)
+                } else {
+                    Image(systemName: "eye.fill")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                }
             }
 
-            Text(String(localized: "home_window_score"))
-                .font(.headline)
-                .foregroundStyle(theme.text)
+            if viewModel.latestThreshold != nil {
+                Text(String(localized: "home_window_score"))
+                    .font(.headline)
+                    .foregroundStyle(theme.text)
 
-            if let improvement = viewModel.improvementPercent {
-                Text(String(localized: "home_improvement \(String(format: "%.0f", improvement))"))
+                if let improvement = viewModel.improvementPercent {
+                    Text(String(localized: "home_improvement \(String(format: "%.0f", improvement))"))
+                        .font(.subheadline)
+                        .foregroundStyle(theme.teal)
+                }
+            } else {
+                Text(String(localized: "home_welcome"))
+                    .font(.headline)
+                    .foregroundStyle(theme.text)
+                Text(String(localized: "home_welcome_detail"))
                     .font(.subheadline)
-                    .foregroundStyle(theme.teal)
+                    .foregroundStyle(theme.textSub)
+                    .multilineTextAlignment(.center)
             }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 24)
+        .padding(.horizontal, 16)
         .background(theme.bgCard, in: RoundedRectangle(cornerRadius: 16))
         .shadow(color: theme.cardShadow, radius: 8, y: 4)
     }
@@ -265,5 +284,15 @@ struct HomeView: View {
         .padding()
         .background(theme.bgCard, in: RoundedRectangle(cornerRadius: 12))
         .shadow(color: theme.cardShadow, radius: 4, y: 2)
+    }
+
+    // MARK: - Disclaimer Footer
+
+    private var disclaimerFooter: some View {
+        Text(String(localized: "settings_disclaimer"))
+            .font(.caption2)
+            .foregroundStyle(theme.textMuted)
+            .multilineTextAlignment(.center)
+            .padding(.top, 8)
     }
 }

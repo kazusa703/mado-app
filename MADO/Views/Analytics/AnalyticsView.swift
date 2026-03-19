@@ -3,7 +3,7 @@ import Charts
 
 struct AnalyticsView: View {
     @State private var viewModel = AnalyticsViewModel()
-    let theme = ThemeManager.shared
+    @Bindable var theme = ThemeManager.shared
 
     var body: some View {
         NavigationStack {

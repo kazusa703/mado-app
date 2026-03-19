@@ -330,6 +330,18 @@
         "ja" : { "stringUnit" : { "state" : "translated", "value" : "復元可能な購入が見つかりませんでした" } },
         "en" : { "stringUnit" : { "state" : "translated", "value" : "No purchase found to restore" } }
       }
+    },
+    "home_welcome" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "視野の窓を広げよう" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Expand Your Window" } }
+      }
+    },
+    "home_welcome_detail" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "下のボタンからトレーニングを始めましょう" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap the button below to start training" } }
+      }
     }
   },
   "version" : "1.0"
