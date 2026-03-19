@@ -4,7 +4,7 @@ import UIKit
 
 // MARK: - Stimulus Types
 
-enum StimulusType: Int, CaseIterable {
+enum StimulusType: Int, CaseIterable, Sendable {
     case car = 0
     case truck = 1
 
@@ -16,7 +16,7 @@ enum StimulusType: Int, CaseIterable {
     }
 }
 
-enum SessionPhase {
+enum SessionPhase: Sendable {
     case fixation
     case stimulus
     case mask
@@ -55,12 +55,14 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
     var centralStimulus: StimulusType = .car
     var stimulusDurationFrames: Int = 20
     var currentFrame: Int = 0
-    var showFeedback: Bool = false
     var feedbackCorrect: Bool = false
     var noiseSeed: UInt32 = 0
 
+    // Pre-allocated noise texture to avoid per-frame allocation
+    private var noiseTexture: MTLTexture?
+    private var noiseTextureSize: CGSize = .zero
+
     // Callbacks
-    var onStimulusComplete: (() -> Void)?
     var onMaskComplete: (() -> Void)?
 
     private let fixationDurationFrames = 30  // ~500ms at 60fps
@@ -69,20 +71,23 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
 
     init?(mtkView: MTKView) {
         guard let device = MTLCreateSystemDefaultDevice(),
-              let commandQueue = device.makeCommandQueue() else { return nil }
+              let commandQueue = device.makeCommandQueue(),
+              let library = device.makeDefaultLibrary(),
+              let noiseFunc = library.makeFunction(name: "noiseKernel") else { return nil }
 
         self.device = device
         self.commandQueue = commandQueue
         mtkView.device = device
         mtkView.colorPixelFormat = .bgra8Unorm
-        mtkView.clearColor = MTLClearColor(red: 0.024, green: 0.031, blue: 0.055, alpha: 1.0) // Session bg
-
-        // Load shaders
-        guard let library = device.makeDefaultLibrary() else { return nil }
+        mtkView.clearColor = MTLClearColor(red: 0.024, green: 0.031, blue: 0.055, alpha: 1.0)
 
         // Noise compute pipeline
-        guard let noiseFunc = library.makeFunction(name: "noiseKernel") else { return nil }
-        self.noisePipeline = try! device.makeComputePipelineState(function: noiseFunc)
+        do {
+            self.noisePipeline = try device.makeComputePipelineState(function: noiseFunc)
+        } catch {
+            print("Failed to create noise pipeline: \(error)")
+            return nil
+        }
 
         // Stimulus render pipeline
         let pipelineDesc = MTLRenderPipelineDescriptor()
@@ -92,12 +97,21 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
         pipelineDesc.colorAttachments[0].isBlendingEnabled = true
         pipelineDesc.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         pipelineDesc.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
-        self.stimulusPipeline = try! device.makeRenderPipelineState(descriptor: pipelineDesc)
+
+        do {
+            self.stimulusPipeline = try device.makeRenderPipelineState(descriptor: pipelineDesc)
+        } catch {
+            print("Failed to create stimulus pipeline: \(error)")
+            return nil
+        }
 
         super.init()
     }
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+        // Recreate noise texture when size changes
+        ensureNoiseTexture(width: Int(size.width), height: Int(size.height))
+    }
 
     func draw(in view: MTKView) {
         guard let drawable = view.currentDrawable,
@@ -131,7 +145,7 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
             }
 
         case .response:
-            drawResponseWait(descriptor: descriptor, commandBuffer: commandBuffer)
+            drawFixation(descriptor: descriptor, commandBuffer: commandBuffer)
 
         case .feedback:
             drawFeedback(descriptor: descriptor, commandBuffer: commandBuffer)
@@ -141,7 +155,6 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
             }
 
         case .interTrial:
-            // Clear screen between trials
             let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
             encoder?.endEncoding()
         }
@@ -150,16 +163,29 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
         commandBuffer.commit()
     }
 
+    // MARK: - Noise Texture Management
+
+    private func ensureNoiseTexture(width: Int, height: Int) {
+        let newSize = CGSize(width: width, height: height)
+        guard noiseTextureSize != newSize, width > 0, height > 0 else { return }
+        noiseTextureSize = newSize
+
+        let desc = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
+        desc.usage = [.shaderWrite, .shaderRead]
+        desc.storageMode = .private
+        noiseTexture = device.makeTexture(descriptor: desc)
+    }
+
     // MARK: - Drawing
 
     private func drawFixation(descriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer) {
         guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else { return }
 
-        // Draw fixation cross using stimulus pipeline
         var params = StimulusParams(
             center: SIMD2<Float>(0.5, 0.5),
             size: SIMD2<Float>(0.02, 0.002),
-            color: SIMD4<Float>(0.298, 0.651, 0.910, 1.0), // fixation color
+            color: SIMD4<Float>(0.298, 0.651, 0.910, 1.0),
             shapeType: 0,
             opacity: 0.6
         )
@@ -181,15 +207,10 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
     private func drawStimulus(descriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer) {
         guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else { return }
 
-        // Central stimulus
-        let color: SIMD4<Float> = centralStimulus == .car
-            ? SIMD4<Float>(0.9, 0.9, 0.9, 1.0)
-            : SIMD4<Float>(0.9, 0.9, 0.9, 1.0)
-
         var params = StimulusParams(
             center: SIMD2<Float>(0.5, 0.5),
             size: SIMD2<Float>(0.06, 0.08),
-            color: color,
+            color: SIMD4<Float>(0.9, 0.9, 0.9, 1.0),
             shapeType: Int32(centralStimulus.rawValue),
             opacity: 1.0
         )
@@ -206,10 +227,8 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
         let w = Int(view.drawableSize.width)
         let h = Int(view.drawableSize.height)
 
-        let textureDesc = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: .bgra8Unorm, width: w, height: h, mipmapped: false)
-        textureDesc.usage = [.shaderWrite, .shaderRead]
-        guard let noiseTexture = device.makeTexture(descriptor: textureDesc) else { return }
+        ensureNoiseTexture(width: w, height: h)
+        guard let noiseTexture else { return }
 
         // Compute noise
         if let computeEncoder = commandBuffer.makeComputeCommandEncoder() {
@@ -230,35 +249,29 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
             computeEncoder.endEncoding()
         }
 
-        // Render noise texture to screen using blit
+        // Blit noise to drawable
         let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         encoder?.endEncoding()
 
-        if let blitEncoder = commandBuffer.makeBlitCommandEncoder() {
-            if let drawable = view.currentDrawable {
-                blitEncoder.copy(from: noiseTexture,
-                                sourceSlice: 0, sourceLevel: 0,
-                                sourceOrigin: MTLOrigin(x: 0, y: 0, z: 0),
-                                sourceSize: MTLSize(width: w, height: h, depth: 1),
-                                to: drawable.texture,
-                                destinationSlice: 0, destinationLevel: 0,
-                                destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0))
-            }
+        if let blitEncoder = commandBuffer.makeBlitCommandEncoder(),
+           let drawable = view.currentDrawable {
+            blitEncoder.copy(from: noiseTexture,
+                            sourceSlice: 0, sourceLevel: 0,
+                            sourceOrigin: MTLOrigin(x: 0, y: 0, z: 0),
+                            sourceSize: MTLSize(width: w, height: h, depth: 1),
+                            to: drawable.texture,
+                            destinationSlice: 0, destinationLevel: 0,
+                            destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0))
             blitEncoder.endEncoding()
         }
-    }
-
-    private func drawResponseWait(descriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer) {
-        // Just clear screen with fixation cross
-        drawFixation(descriptor: descriptor, commandBuffer: commandBuffer)
     }
 
     private func drawFeedback(descriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer) {
         guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else { return }
 
         let color: SIMD4<Float> = feedbackCorrect
-            ? SIMD4<Float>(0.204, 0.780, 0.349, 1.0) // green
-            : SIMD4<Float>(1.0, 0.271, 0.227, 1.0)   // red
+            ? SIMD4<Float>(0.204, 0.780, 0.349, 1.0)
+            : SIMD4<Float>(1.0, 0.271, 0.227, 1.0)
 
         var params = StimulusParams(
             center: SIMD2<Float>(0.5, 0.5),
@@ -286,7 +299,6 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
 
     func showResponseFeedback(correct: Bool) {
         feedbackCorrect = correct
-        showFeedback = true
         currentFrame = 0
         phase = .feedback
     }

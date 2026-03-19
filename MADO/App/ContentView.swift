@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTab = 0
-    let theme = ThemeManager.shared
+    @Bindable var theme = ThemeManager.shared
 
     var body: some View {
         TabView(selection: $selectedTab) {

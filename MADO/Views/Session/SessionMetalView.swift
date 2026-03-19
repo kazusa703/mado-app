@@ -16,5 +16,12 @@ struct SessionMetalView: UIViewRepresentable {
         return mtkView
     }
 
-    func updateUIView(_ uiView: MTKView, context: Context) {}
+    func updateUIView(_ uiView: MTKView, context: Context) {
+        // Pause/resume based on renderer state
+    }
+
+    static func dismantleUIView(_ uiView: MTKView, coordinator: ()) {
+        uiView.isPaused = true
+        uiView.delegate = nil
+    }
 }

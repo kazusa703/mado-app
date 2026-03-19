@@ -114,7 +114,7 @@ struct AnalyticsView: View {
                         x: .value("Trial", point.trialNumber),
                         y: .value("RT", point.reactionTime)
                     )
-                    .foregroundStyle(point.isCorrect ? theme.teal : Color.red)
+                    .foregroundStyle(point.isCorrect ? theme.teal : Color(hex: "FF453A"))
                     .symbolSize(40)
                 }
                 .chartYAxis {

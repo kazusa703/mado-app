@@ -1,12 +1,13 @@
 import SwiftUI
 import MetalKit
+import StoreKit
 
 struct SessionView: View {
     @State private var viewModel = SessionViewModel()
     @State private var renderer: StimulusRenderer?
     @State private var showPauseAlert = false
-    @State private var showResult = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.requestReview) private var requestReview
 
     let onDismiss: () -> Void
 
@@ -49,6 +50,7 @@ struct SessionView: View {
                         .foregroundStyle(ThemeColors.Session.textMuted)
                         .frame(width: 44, height: 44)
                 }
+                .accessibilityLabel(String(localized: "session_pause_title"))
             }
             .padding(.horizontal)
             .padding(.top, 8)
@@ -143,7 +145,7 @@ struct SessionView: View {
         HStack(spacing: 16) {
             Image(systemName: viewModel.isCorrect == true ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .font(.title)
-                .foregroundStyle(viewModel.isCorrect == true ? Color.green : Color.red)
+                .foregroundStyle(viewModel.isCorrect == true ? Color(hex: "34C759") : Color(hex: "FF453A"))
 
             if let rt = viewModel.reactionTimeMs {
                 Text("\(Int(rt))ms")
@@ -213,9 +215,15 @@ struct SessionView: View {
             Spacer()
 
             Button {
-                // Show ad for free users, then dismiss
+                // Show ad for free users
                 _ = AdMobService.shared.showInterstitialIfNeeded()
-                ATTService.requestIfNeeded()
+
+                // Request review after 3rd completed session
+                let totalSessions = UserSettings.shared.sessionsToday
+                if totalSessions == 3 {
+                    requestReview()
+                }
+
                 onDismiss()
             } label: {
                 Text(String(localized: "session_return_home"))
@@ -233,17 +241,19 @@ struct SessionView: View {
     // MARK: - Setup
 
     private func setupRenderer() {
-        let mtkView = MTKView()
-        if let r = StimulusRenderer(mtkView: mtkView) {
-            renderer = r
-            r.onMaskComplete = { [weak viewModel] in
-                viewModel?.onMaskComplete()
-            }
-            viewModel.startSession()
-            r.startTrial(
-                stimulus: viewModel.currentStimulus,
-                durationFrames: viewModel.durationFrames
-            )
+        // Create a temporary MTKView just for pipeline init (SessionMetalView creates the real one)
+        let tempView = MTKView()
+        tempView.device = MTLCreateSystemDefaultDevice()
+        guard let r = StimulusRenderer(mtkView: tempView) else { return }
+
+        renderer = r
+        r.onMaskComplete = { [weak viewModel] in
+            viewModel?.onMaskComplete()
         }
+        viewModel.startSession()
+        r.startTrial(
+            stimulus: viewModel.currentStimulus,
+            durationFrames: viewModel.durationFrames
+        )
     }
 }

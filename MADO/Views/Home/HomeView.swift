@@ -96,9 +96,7 @@ struct HomeView: View {
 
     private var startButton: some View {
         Button {
-            if UserSettings.shared.canStartSession {
-                showSession = true
-            }
+            showSession = true
         } label: {
             HStack {
                 Image(systemName: "play.fill")
@@ -110,8 +108,13 @@ struct HomeView: View {
             .background(theme.accent, in: RoundedRectangle(cornerRadius: 14))
             .foregroundStyle(.white)
         }
-        .sensoryFeedback(.impact(flexibility: .soft), trigger: showSession)
+        .disabled(!UserSettings.shared.canStartSession)
         .opacity(UserSettings.shared.canStartSession ? 1.0 : 0.5)
+        .sensoryFeedback(.impact(flexibility: .soft), trigger: showSession)
+        .accessibilityLabel(String(localized: "home_start_training"))
+        .accessibilityHint(UserSettings.shared.canStartSession
+            ? String(localized: "accessibility_start_hint")
+            : String(localized: "accessibility_limit_reached"))
     }
 
     // MARK: - Stats Row

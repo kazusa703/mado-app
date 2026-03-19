@@ -14,6 +14,11 @@ struct MADOApp: App {
                     ThemeManager.shared.updateSystemScheme(systemScheme)
                 }
                 .preferredColorScheme(ThemeManager.shared.currentTheme.colorScheme)
+                .task {
+                    // Request ATT after a brief delay on second+ launch
+                    try? await Task.sleep(for: .seconds(2))
+                    ATTService.requestIfNeeded()
+                }
         }
     }
 }

@@ -36,10 +36,10 @@ final class HomeViewModel {
     }
 
     var improvementPercent: Double? {
-        guard thresholdHistory.count >= 2 else { return nil }
-        let first = thresholdHistory.first!.threshold
-        let last = thresholdHistory.last!.threshold
-        guard first > 0 else { return nil }
+        guard let first = thresholdHistory.first?.threshold,
+              let last = thresholdHistory.last?.threshold,
+              thresholdHistory.count >= 2,
+              first > 0 else { return nil }
         return ((first - last) / first) * 100
     }
 

@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct SettingsView: View {
-    let theme = ThemeManager.shared
+    @Bindable var theme = ThemeManager.shared
     @State private var showDeleteConfirmation = false
     @State private var storeKit = StoreKitService.shared
+    @State private var showRestoreResult = false
+    @State private var restoreMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -49,7 +51,13 @@ struct SettingsView: View {
                         .disabled(storeKit.isLoading)
 
                         Button(String(localized: "settings_restore_purchase")) {
-                            Task { await storeKit.restore() }
+                            Task {
+                                await storeKit.restore()
+                                restoreMessage = storeKit.isPurchased
+                                    ? String(localized: "settings_restore_success")
+                                    : String(localized: "settings_restore_not_found")
+                                showRestoreResult = true
+                            }
                         }
                     }
                 } header: {
@@ -110,6 +118,11 @@ struct SettingsView: View {
                 }
             } message: {
                 Text(String(localized: "settings_delete_confirm_message"))
+            }
+            .alert(String(localized: "settings_restore_purchase"), isPresented: $showRestoreResult) {
+                Button("OK") {}
+            } message: {
+                Text(restoreMessage)
             }
         }
     }

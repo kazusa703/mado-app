@@ -306,6 +306,30 @@
         "ja" : { "stringUnit" : { "state" : "translated", "value" : "バージョン" } },
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Version" } }
       }
+    },
+    "accessibility_start_hint" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タップしてトレーニングを開始します" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap to start training" } }
+      }
+    },
+    "accessibility_limit_reached" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "本日のセッション上限に達しました。Proにアップグレードすると無制限にプレイできます" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Daily session limit reached. Upgrade to Pro for unlimited play" } }
+      }
+    },
+    "settings_restore_success" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "購入が復元されました" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Purchase restored successfully" } }
+      }
+    },
+    "settings_restore_not_found" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "復元可能な購入が見つかりませんでした" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No purchase found to restore" } }
+      }
     }
   },
   "version" : "1.0"
