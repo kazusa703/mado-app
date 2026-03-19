@@ -24,6 +24,10 @@ struct SessionView: View {
         .preferredColorScheme(.dark)
         .statusBarHidden(true)
         .onAppear { setupRenderer() }
+        .onDisappear {
+            renderer?.phase = .interTrial
+            renderer = nil
+        }
     }
 
     // MARK: - Active Session

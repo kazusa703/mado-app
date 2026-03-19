@@ -90,7 +90,7 @@ struct HomeView: View {
                     .foregroundStyle(theme.text)
 
                 if let improvement = viewModel.improvementPercent {
-                    Text(String(localized: "home_improvement \(String(format: "%.0f", improvement))"))
+                    Text("\(Int(improvement))% \(String(localized: "home_improved"))")
                         .font(.subheadline)
                         .foregroundStyle(theme.teal)
                 }

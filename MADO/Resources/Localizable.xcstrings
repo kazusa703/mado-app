@@ -25,10 +25,10 @@
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Window Score" } }
       }
     },
-    "home_improvement %@" : {
+    "home_improved" : {
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%@%% 改善" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%@%% improved" } }
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "改善" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "improved" } }
       }
     },
     "home_start_training" : {
