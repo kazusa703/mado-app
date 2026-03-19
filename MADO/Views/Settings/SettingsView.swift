@@ -58,10 +58,10 @@ struct SettingsView: View {
 
                 // MARK: - Legal
                 Section {
-                    Link(destination: URL(string: "https://example.com/privacy")!) {
+                    Link(destination: URL(string: "https://kazusa703.github.io/mado-app/privacy.html")!) {
                         Label(String(localized: "settings_privacy_policy"), systemImage: "hand.raised.fill")
                     }
-                    Link(destination: URL(string: "https://example.com/terms")!) {
+                    Link(destination: URL(string: "https://kazusa703.github.io/mado-app/terms.html")!) {
                         Label(String(localized: "settings_terms"), systemImage: "doc.text.fill")
                     }
                 } header: {
