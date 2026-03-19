@@ -1,0 +1,42 @@
+# Xcode
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+*.moved-aside
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# macOS
+.DS_Store
+*.swp
+*~.nib
+
+# CocoaPods / Carthage
+Pods/
+Carthage/Build/
+
+# SPM
+.build/
+Package.resolved
+
+# Secrets (never commit)
+GoogleService-Info.plist
+.env
+.env.*
+*.p8
+*.p12
+*.mobileprovision
+Secrets/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Other
+*.playground/timeline.xctimeline
+*.playground/playground.xcworkspace
+xcuserdata/

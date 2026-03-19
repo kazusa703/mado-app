@@ -1,0 +1,312 @@
+{
+  "sourceLanguage" : "ja",
+  "strings" : {
+    "tab_home" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ホーム" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Home" } }
+      }
+    },
+    "tab_analytics" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "分析" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Analytics" } }
+      }
+    },
+    "tab_settings" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "設定" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } }
+      }
+    },
+    "home_window_score" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "窓スコア" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Window Score" } }
+      }
+    },
+    "home_improvement %@" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%@%% 改善" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%@%% improved" } }
+      }
+    },
+    "home_start_training" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "トレーニング開始" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start Training" } }
+      }
+    },
+    "home_streak_days" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "継続日数" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Streak" } }
+      }
+    },
+    "home_today_sessions" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Today" } }
+      }
+    },
+    "home_best_record" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ベスト" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Best" } }
+      }
+    },
+    "home_tasks" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タスク" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tasks" } }
+      }
+    },
+    "home_threshold_trend" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "しきい値推移" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Threshold Trend" } }
+      }
+    },
+    "task1_name" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "処理速度" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Processing Speed" } }
+      }
+    },
+    "task2_name" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "分割注意" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Divided Attention" } }
+      }
+    },
+    "task3_name" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "選択的注意" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Selective Attention" } }
+      }
+    },
+    "stimulus_car" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "車" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Car" } }
+      }
+    },
+    "stimulus_truck" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "トラック" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Truck" } }
+      }
+    },
+    "session_trial %lld" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "試行 %lld" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Trial %lld" } }
+      }
+    },
+    "session_pause_title" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "一時停止" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Paused" } }
+      }
+    },
+    "session_resume" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "再開" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Resume" } }
+      }
+    },
+    "session_quit" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "終了" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Quit" } }
+      }
+    },
+    "session_complete" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッション完了" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Session Complete" } }
+      }
+    },
+    "session_threshold" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "しきい値" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Threshold" } }
+      }
+    },
+    "session_total_trials" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "試行数" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Trials" } }
+      }
+    },
+    "session_accuracy" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "正答率" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Accuracy" } }
+      }
+    },
+    "session_return_home" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ホームに戻る" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Return Home" } }
+      }
+    },
+    "analytics_title" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "分析" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Analytics" } }
+      }
+    },
+    "analytics_empty" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "まだデータがありません" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No data yet" } }
+      }
+    },
+    "analytics_empty_detail" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "トレーニングを完了すると\nここに結果が表示されます" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Complete a training session\nto see your results here" } }
+      }
+    },
+    "analytics_threshold_trend" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "しきい値推移" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Threshold Trend" } }
+      }
+    },
+    "analytics_reaction_time" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "反応時間" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reaction Time" } }
+      }
+    },
+    "analytics_no_rt_data" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "反応時間データなし" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No reaction time data" } }
+      }
+    },
+    "settings_title" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "設定" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } }
+      }
+    },
+    "settings_appearance" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "外観" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Appearance" } }
+      }
+    },
+    "settings_theme" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "テーマ" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Theme" } }
+      }
+    },
+    "theme_system" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "システム" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "System" } }
+      }
+    },
+    "theme_light" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ライト" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Light" } }
+      }
+    },
+    "theme_dark" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ダーク" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Dark" } }
+      }
+    },
+    "settings_pro_active" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Pro（有効）" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pro (Active)" } }
+      }
+    },
+    "settings_upgrade_pro" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Proにアップグレード" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Upgrade to Pro" } }
+      }
+    },
+    "settings_pro_description" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "全タスク解放・無制限プレイ・広告なし" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "All tasks, unlimited play, no ads" } }
+      }
+    },
+    "settings_restore_purchase" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "購入を復元" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Restore Purchase" } }
+      }
+    },
+    "settings_privacy_policy" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "プライバシーポリシー" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Privacy Policy" } }
+      }
+    },
+    "settings_terms" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "利用規約" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Terms of Use" } }
+      }
+    },
+    "settings_legal" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "法的情報" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Legal" } }
+      }
+    },
+    "settings_disclaimer" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "本アプリは医療機器ではありません。認知症の診断・治療・予防を目的としたものではありません。" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This app is not a medical device. It is not intended for the diagnosis, treatment, or prevention of dementia." } }
+      }
+    },
+    "settings_data" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データ" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Data" } }
+      }
+    },
+    "settings_delete_data" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべてのデータを削除" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete All Data" } }
+      }
+    },
+    "settings_delete_confirm_title" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データを削除しますか？" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete all data?" } }
+      }
+    },
+    "settings_delete_confirm" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "削除" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete" } }
+      }
+    },
+    "settings_delete_confirm_message" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "この操作は取り消せません。すべてのトレーニング記録が削除されます。" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This action cannot be undone. All training records will be deleted." } }
+      }
+    },
+    "settings_version" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バージョン" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Version" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}
