@@ -42,7 +42,7 @@ targets:
         INFOPLIST_FILE: MADO/Resources/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.imaiissatsu.mado
         CODE_SIGN_STYLE: Automatic
-        TARGETED_DEVICE_FAMILY: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
         SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE: false
         MTL_FAST_MATH: true

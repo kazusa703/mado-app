@@ -4,6 +4,7 @@ import Charts
 struct HomeView: View {
     @State private var viewModel = HomeViewModel()
     @State private var showSession = false
+    @State private var showOnboarding = !UserSettings.shared.hasCompletedOnboarding
     @Bindable var theme = ThemeManager.shared
 
     var body: some View {
@@ -28,6 +29,12 @@ struct HomeView: View {
                 SessionView(onDismiss: {
                     showSession = false
                     Task { await viewModel.load() }
+                })
+            }
+            .fullScreenCover(isPresented: $showOnboarding) {
+                OnboardingView(onComplete: {
+                    UserSettings.shared.hasCompletedOnboarding = true
+                    showOnboarding = false
                 })
             }
         }

@@ -33,5 +33,10 @@ final class UserSettings {
         return formatter.string(from: Date())
     }
 
+    var hasCompletedOnboarding: Bool {
+        get { UserDefaults.standard.bool(forKey: "hasCompletedOnboarding") }
+        set { UserDefaults.standard.set(newValue, forKey: "hasCompletedOnboarding") }
+    }
+
     private init() {}
 }

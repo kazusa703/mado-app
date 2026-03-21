@@ -342,6 +342,102 @@
         "ja" : { "stringUnit" : { "state" : "translated", "value" : "下のボタンからトレーニングを始めましょう" } },
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap the button below to start training" } }
       }
+    },
+    "onboarding_welcome_title" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "MADOへようこそ" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Welcome to MADO" } }
+      }
+    },
+    "onboarding_welcome_body" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "注意を向けられる範囲＝「視野の窓」を\n広げるトレーニングゲームです" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "A training game that expands your\n\"window\" of attention" } }
+      }
+    },
+    "onboarding_start" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "はじめる" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Let's Go" } }
+      }
+    },
+    "onboarding_explain_title" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ルール" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "How It Works" } }
+      }
+    },
+    "onboarding_explain_body" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "画面中央に一瞬だけ表示される形を\n見分けてください" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Identify the shape that briefly\nappears at the center" } }
+      }
+    },
+    "onboarding_or" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "or" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "or" } }
+      }
+    },
+    "onboarding_try_it" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "やってみる" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Try It" } }
+      }
+    },
+    "onboarding_trial %lld" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "お試し %lld / 3" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Try %lld / 3" } }
+      }
+    },
+    "onboarding_coach_fixation" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "中央の ＋ を見てください" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Look at the + in the center" } }
+      }
+    },
+    "onboarding_coach_respond" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "どちらか選んでタップ！" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap your answer!" } }
+      }
+    },
+    "onboarding_coach_try_yourself" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今度は自分で挑戦！" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Now try it yourself!" } }
+      }
+    },
+    "onboarding_skip" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スキップ" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Skip" } }
+      }
+    },
+    "onboarding_result_title" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "あなたの反応速度" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your Reaction Speed" } }
+      }
+    },
+    "onboarding_correct" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "正解" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "correct" } }
+      }
+    },
+    "onboarding_result_body" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "トレーニングを続けて\n視野の窓を広げましょう" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Keep training to expand\nyour window of attention" } }
+      }
+    },
+    "onboarding_result_cta" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "トレーニングを始める" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start Training" } }
+      }
     }
   },
   "version" : "1.0"
