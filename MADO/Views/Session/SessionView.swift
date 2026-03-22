@@ -1,6 +1,6 @@
-import SwiftUI
 import MetalKit
 import StoreKit
+import SwiftUI
 
 struct SessionView: View {
     @State private var viewModel = SessionViewModel()
@@ -165,7 +165,7 @@ struct SessionView: View {
                 if !viewModel.isSessionComplete {
                     renderer?.startTrial(
                         stimulus: viewModel.currentStimulus,
-                        durationFrames: viewModel.durationFrames
+                        durationMs: viewModel.currentDurationMs
                     )
                 }
             }
@@ -257,7 +257,7 @@ struct SessionView: View {
         viewModel.startSession()
         r.startTrial(
             stimulus: viewModel.currentStimulus,
-            durationFrames: viewModel.durationFrames
+            durationMs: viewModel.currentDurationMs
         )
     }
 }

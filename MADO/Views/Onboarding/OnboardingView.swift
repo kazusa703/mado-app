@@ -1,5 +1,5 @@
-import SwiftUI
 import MetalKit
+import SwiftUI
 
 struct OnboardingView: View {
     @State private var viewModel = OnboardingViewModel()
@@ -177,7 +177,7 @@ struct OnboardingView: View {
 
             // Progress dots
             HStack(spacing: 8) {
-                ForEach(1...3, id: \.self) { i in
+                ForEach(1 ... OnboardingViewModel.totalTrials, id: \.self) { i in
                     Circle()
                         .fill(trialDotColor(for: i))
                         .frame(width: 8, height: 8)
@@ -311,7 +311,7 @@ struct OnboardingView: View {
                 if case .trial = viewModel.currentStep {
                     renderer?.startTrial(
                         stimulus: viewModel.currentStimulus,
-                        durationFrames: viewModel.stimulusDurationFrames
+                        durationMs: viewModel.stimulusDurationMs
                     )
                 }
             }
@@ -379,7 +379,7 @@ struct OnboardingView: View {
         }
         r.startTrial(
             stimulus: viewModel.currentStimulus,
-            durationFrames: viewModel.stimulusDurationFrames
+            durationMs: viewModel.stimulusDurationMs
         )
     }
 }

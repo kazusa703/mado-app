@@ -1,5 +1,5 @@
-import SwiftUI
 import Charts
+import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel = HomeViewModel()
@@ -121,26 +121,45 @@ struct HomeView: View {
     // MARK: - Start Button
 
     private var startButton: some View {
-        Button {
-            showSession = true
-        } label: {
-            HStack {
-                Image(systemName: "play.fill")
-                Text(String(localized: "home_start_training"))
-                    .font(.headline)
+        VStack(spacing: 12) {
+            Button {
+                showSession = true
+            } label: {
+                HStack {
+                    Image(systemName: "play.fill")
+                    Text(String(localized: "home_start_training"))
+                        .font(.headline)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(theme.accent, in: RoundedRectangle(cornerRadius: 14))
+                .foregroundStyle(.white)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(theme.accent, in: RoundedRectangle(cornerRadius: 14))
-            .foregroundStyle(.white)
+            .disabled(!UserSettings.shared.canStartSession && !UserSettings.shared.canStartWithRewardAd)
+            .opacity(UserSettings.shared.canStartSession ? 1.0 : 0.5)
+            .sensoryFeedback(.impact(flexibility: .soft), trigger: showSession)
+            .accessibilityLabel(String(localized: "home_start_training"))
+            .accessibilityHint(UserSettings.shared.canStartSession
+                ? String(localized: "accessibility_start_hint")
+                : String(localized: "accessibility_limit_reached"))
+
+            if UserSettings.shared.canStartWithRewardAd {
+                Button {
+                    // TODO: Show reward ad, then set showSession = true on completion
+                    showSession = true
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "play.rectangle.fill")
+                        Text(String(localized: "home_watch_ad_play"))
+                            .font(.subheadline.bold())
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(theme.goldSoft, in: RoundedRectangle(cornerRadius: 12))
+                    .foregroundStyle(theme.gold)
+                }
+            }
         }
-        .disabled(!UserSettings.shared.canStartSession)
-        .opacity(UserSettings.shared.canStartSession ? 1.0 : 0.5)
-        .sensoryFeedback(.impact(flexibility: .soft), trigger: showSession)
-        .accessibilityLabel(String(localized: "home_start_training"))
-        .accessibilityHint(UserSettings.shared.canStartSession
-            ? String(localized: "accessibility_start_hint")
-            : String(localized: "accessibility_limit_reached"))
     }
 
     // MARK: - Stats Row

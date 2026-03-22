@@ -23,8 +23,15 @@ final class UserSettings {
         !isPro && adsShownToday < 2
     }
 
+    // Free: 2 sessions/day, 3rd+ via reward ad
+    private let freeSessionLimit = 2
+
     var canStartSession: Bool {
-        isPro || sessionsToday < 1
+        isPro || sessionsToday < freeSessionLimit
+    }
+
+    var canStartWithRewardAd: Bool {
+        !isPro && sessionsToday >= freeSessionLimit
     }
 
     private static var todayKey: String {

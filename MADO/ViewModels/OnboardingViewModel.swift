@@ -5,14 +5,16 @@ import QuartzCore
 final class OnboardingViewModel {
     // MARK: - Step
 
+    static let totalTrials = 5
+
     enum Step: Equatable {
         case welcome
         case explain
-        case trial(Int) // 1, 2, 3
+        case trial(Int) // 1...5
         case result
 
         var trialNumber: Int? {
-            if case .trial(let n) = self { return n }
+            if case let .trial(n) = self { return n }
             return nil
         }
     }
@@ -55,12 +57,12 @@ final class OnboardingViewModel {
     }
 
     var showCoachForRespond: Bool {
-        guard case .trial(let n) = currentStep else { return false }
-        return n <= 2 && coachPhase == .respond
+        guard case let .trial(n) = currentStep else { return false }
+        return n <= 3 && coachPhase == .respond
     }
 
     var showTryYourself: Bool {
-        currentStep == .trial(2) && coachPhase == .fixation
+        currentStep == .trial(3) && coachPhase == .fixation
     }
 
     // MARK: - Navigation
@@ -72,8 +74,8 @@ final class OnboardingViewModel {
         case .explain:
             currentStep = .trial(1)
             startTrial()
-        case .trial(let n):
-            if n < 3 {
+        case let .trial(n):
+            if n < Self.totalTrials {
                 currentStep = .trial(n + 1)
                 startTrial()
             } else {
@@ -121,7 +123,17 @@ final class OnboardingViewModel {
         advance()
     }
 
-    // MARK: - Stimulus Duration (fixed for onboarding, easier)
+    // MARK: - Stimulus Duration (progressively shorter to show difficulty scaling)
 
-    var stimulusDurationFrames: Int { 25 } // ~417ms at 60fps — easy enough to see
+    var stimulusDurationMs: Double {
+        guard case let .trial(n) = currentStep else { return 417.0 }
+        // Trial 1: 500ms, 2: 417ms, 3: 333ms, 4: 250ms, 5: 200ms
+        switch n {
+        case 1: return 500.0
+        case 2: return 417.0
+        case 3: return 333.0
+        case 4: return 250.0
+        default: return 200.0
+        }
+    }
 }

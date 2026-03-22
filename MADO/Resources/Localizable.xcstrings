@@ -343,6 +343,12 @@
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap the button below to start training" } }
       }
     },
+    "home_watch_ad_play" : {
+      "localizations" : {
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "動画を見てもう1回プレイ" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Watch ad for extra play" } }
+      }
+    },
     "onboarding_welcome_title" : {
       "localizations" : {
         "ja" : { "stringUnit" : { "state" : "translated", "value" : "MADOへようこそ" } },
@@ -387,8 +393,8 @@
     },
     "onboarding_trial %lld" : {
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "お試し %lld / 3" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Try %lld / 3" } }
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "お試し %lld / 5" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Try %lld / 5" } }
       }
     },
     "onboarding_coach_fixation" : {

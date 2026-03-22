@@ -40,3 +40,4 @@ fastlane/test_output
 *.playground/timeline.xctimeline
 *.playground/playground.xcworkspace
 xcuserdata/
+firebase-debug.log

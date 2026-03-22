@@ -34,13 +34,25 @@
 		C21A1B145DB3C847CD18AB1D /* StimulusRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEE7CFC0D942D4480F0119F /* StimulusRenderer.swift */; };
 		C3FC5EB7F684D94C5ED1F381 /* SessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63793B3BC668A8A3775C6A0 /* SessionViewModel.swift */; };
 		D2CF2947D7D796D768B9B4C2 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09729D7F6DCAA65F4357A5 /* ThemeManager.swift */; };
+		D999054CA61AF41FC842BA18 /* StaircaseEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02480E39529861F34945E906 /* StaircaseEngineTests.swift */; };
 		FAFE1251E9FD30F95B7C7B2F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C39897224D30BF475C4A81 /* HomeView.swift */; };
 		FDD37701C7D7CF78CB1E216F /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD72D4E67395D7830DE142DC /* ThemeColors.swift */; };
 		FEBF4558BE2CC6B7835CEE6A /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B351A65F0CE99784B93E52 /* SessionRecord.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DA63AD9D08E893ED0CAC429D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A13A036C7C23C7AFC950CEDF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9083C37B1A9CADD840414A9B;
+			remoteInfo = MADO;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		01277009A893D413E3580637 /* StaircaseEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaircaseEngine.swift; sourceTree = "<group>"; };
+		02480E39529861F34945E906 /* StaircaseEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaircaseEngineTests.swift; sourceTree = "<group>"; };
 		04BE9F5A8AA7777D81950892 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		05B4D054A48354E472664B46 /* AdMobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobService.swift; sourceTree = "<group>"; };
 		0AEE7CFC0D942D4480F0119F /* StimulusRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StimulusRenderer.swift; sourceTree = "<group>"; };
@@ -63,6 +75,7 @@
 		BC09729D7F6DCAA65F4357A5 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		BFF68B5C777589DF22730EE1 /* NoiseShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = NoiseShader.metal; sourceTree = "<group>"; };
 		C8AB6252A9A6EE23E4F0C425 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		C8D93E43A0DE53445C938464 /* MADOTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MADOTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9B351A65F0CE99784B93E52 /* SessionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecord.swift; sourceTree = "<group>"; };
 		CD72D4E67395D7830DE142DC /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		CE3A5A44FB45E7AAD5D82845 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -84,6 +97,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		285FC26E339E4C0999308FC5 /* MADOTests */ = {
+			isa = PBXGroup;
+			children = (
+				02480E39529861F34945E906 /* StaircaseEngineTests.swift */,
+			);
+			path = MADOTests;
+			sourceTree = "<group>";
+		};
 		3037E78671A6845D0F6C4832 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				A43527734B1C8B4729E5CB27 /* MADO */,
+				285FC26E339E4C0999308FC5 /* MADOTests */,
 				94E1A19AAA85ACF21EF1C936 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -144,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				734CF880A8ED675058F8953F /* MADO.app */,
+				C8D93E43A0DE53445C938464 /* MADOTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -251,6 +274,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		35DDB4E6FB5680DF4C67FEE9 /* MADOTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10CB1BF6A525C28C8178D07C /* Build configuration list for PBXNativeTarget "MADOTests" */;
+			buildPhases = (
+				905E1125A7C7D762A2848B00 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5366CE71424644CBA0A08069 /* PBXTargetDependency */,
+			);
+			name = MADOTests;
+			packageProductDependencies = (
+			);
+			productName = MADOTests;
+			productReference = C8D93E43A0DE53445C938464 /* MADOTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9083C37B1A9CADD840414A9B /* MADO */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 362B8B7AC8213EF437A4469E /* Build configuration list for PBXNativeTarget "MADO" */;
@@ -280,6 +321,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
+					35DDB4E6FB5680DF4C67FEE9 = {
+						DevelopmentTeam = WM7939G226;
+					};
 					9083C37B1A9CADD840414A9B = {
 						DevelopmentTeam = WM7939G226;
 						ProvisioningStyle = Automatic;
@@ -304,6 +348,7 @@
 			projectRoot = "";
 			targets = (
 				9083C37B1A9CADD840414A9B /* MADO */,
+				35DDB4E6FB5680DF4C67FEE9 /* MADOTests */,
 			);
 		};
 /* End PBXProject section */
@@ -321,6 +366,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		905E1125A7C7D762A2848B00 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D999054CA61AF41FC842BA18 /* StaircaseEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A55A04942A35F8ED892BC9EB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -357,7 +410,32 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		5366CE71424644CBA0A08069 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9083C37B1A9CADD840414A9B /* MADO */;
+			targetProxy = DA63AD9D08E893ED0CAC429D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		36B31929367893A5F21B707A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.imaiissatsu.MADOTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MADO.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MADO";
+			};
+			name = Debug;
+		};
 		43A3D10081C1ECFDD1F40481 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -535,9 +613,35 @@
 			};
 			name = Release;
 		};
+		BAC6DE6D83D62003A7553C9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.imaiissatsu.MADOTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MADO.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MADO";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		10CB1BF6A525C28C8178D07C /* Build configuration list for PBXNativeTarget "MADOTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36B31929367893A5F21B707A /* Debug */,
+				BAC6DE6D83D62003A7553C9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		362B8B7AC8213EF437A4469E /* Build configuration list for PBXNativeTarget "MADO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

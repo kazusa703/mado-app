@@ -53,21 +53,24 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
     // State
     var phase: SessionPhase = .fixation
     var centralStimulus: StimulusType = .car
-    var stimulusDurationFrames: Int = 20
-    var currentFrame: Int = 0
+    var stimulusDurationMs: Double = 333.0
     var feedbackCorrect: Bool = false
     var noiseSeed: UInt32 = 0
+
+    /// Time-based phase tracking (instead of frame counting)
+    private var phaseStartTime: CFTimeInterval = CACurrentMediaTime()
 
     // Pre-allocated noise texture to avoid per-frame allocation
     private var noiseTexture: MTLTexture?
     private var noiseTextureSize: CGSize = .zero
 
-    // Callbacks
+    /// Callbacks
     var onMaskComplete: (() -> Void)?
 
-    private let fixationDurationFrames = 30  // ~500ms at 60fps
-    private let maskDurationFrames = 18      // ~300ms at 60fps
-    private let feedbackDurationFrames = 36  // ~600ms at 60fps
+    // Phase durations in seconds (frame-rate independent)
+    private let fixationDuration: CFTimeInterval = 0.5 // 500ms
+    private let maskDuration: CFTimeInterval = 0.3 // 300ms
+    private let feedbackDuration: CFTimeInterval = 0.6 // 600ms
 
     init?(mtkView: MTKView) {
         guard let device = MTLCreateSystemDefaultDevice(),
@@ -83,7 +86,7 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
 
         // Noise compute pipeline
         do {
-            self.noisePipeline = try device.makeComputePipelineState(function: noiseFunc)
+            noisePipeline = try device.makeComputePipelineState(function: noiseFunc)
         } catch {
             print("Failed to create noise pipeline: \(error)")
             return nil
@@ -99,7 +102,7 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
         pipelineDesc.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
 
         do {
-            self.stimulusPipeline = try device.makeRenderPipelineState(descriptor: pipelineDesc)
+            stimulusPipeline = try device.makeRenderPipelineState(descriptor: pipelineDesc)
         } catch {
             print("Failed to create stimulus pipeline: \(error)")
             return nil
@@ -108,7 +111,7 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
         super.init()
     }
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    func mtkView(_: MTKView, drawableSizeWillChange size: CGSize) {
         // Recreate noise texture when size changes
         ensureNoiseTexture(width: Int(size.width), height: Int(size.height))
     }
@@ -118,29 +121,27 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
               let descriptor = view.currentRenderPassDescriptor,
               let commandBuffer = commandQueue.makeCommandBuffer() else { return }
 
-        currentFrame += 1
+        let now = CACurrentMediaTime()
+        let elapsed = now - phaseStartTime
 
         switch phase {
         case .fixation:
             drawFixation(descriptor: descriptor, commandBuffer: commandBuffer)
-            if currentFrame >= fixationDurationFrames {
-                currentFrame = 0
-                phase = .stimulus
+            if elapsed >= fixationDuration {
+                transitionTo(.stimulus)
             }
 
         case .stimulus:
             drawStimulus(descriptor: descriptor, commandBuffer: commandBuffer)
-            if currentFrame >= stimulusDurationFrames {
-                currentFrame = 0
-                phase = .mask
-                noiseSeed = UInt32.random(in: 0..<UInt32.max)
+            if elapsed >= stimulusDurationMs / 1000.0 {
+                noiseSeed = UInt32.random(in: 0 ..< UInt32.max)
+                transitionTo(.mask)
             }
 
         case .mask:
             drawNoiseMask(view: view, commandBuffer: commandBuffer, descriptor: descriptor)
-            if currentFrame >= maskDurationFrames {
-                currentFrame = 0
-                phase = .response
+            if elapsed >= maskDuration {
+                transitionTo(.response)
                 onMaskComplete?()
             }
 
@@ -149,9 +150,8 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
 
         case .feedback:
             drawFeedback(descriptor: descriptor, commandBuffer: commandBuffer)
-            if currentFrame >= feedbackDurationFrames {
-                currentFrame = 0
-                phase = .fixation
+            if elapsed >= feedbackDuration {
+                transitionTo(.fixation)
             }
 
         case .interTrial:
@@ -171,7 +171,8 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
         noiseTextureSize = newSize
 
         let desc = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
+            pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false
+        )
         desc.usage = [.shaderWrite, .shaderRead]
         desc.storageMode = .private
         noiseTexture = device.makeTexture(descriptor: desc)
@@ -235,7 +236,7 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
             computeEncoder.setComputePipelineState(noisePipeline)
             computeEncoder.setTexture(noiseTexture, index: 0)
 
-            noiseSeed &+= UInt32(currentFrame)
+            noiseSeed &+= 1
             var noiseParams = NoiseParams(seed: noiseSeed, blockSize: 4, opacity: 0.8)
             computeEncoder.setBytes(&noiseParams, length: MemoryLayout<NoiseParams>.size, index: 0)
 
@@ -254,14 +255,15 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
         encoder?.endEncoding()
 
         if let blitEncoder = commandBuffer.makeBlitCommandEncoder(),
-           let drawable = view.currentDrawable {
+           let drawable = view.currentDrawable
+        {
             blitEncoder.copy(from: noiseTexture,
-                            sourceSlice: 0, sourceLevel: 0,
-                            sourceOrigin: MTLOrigin(x: 0, y: 0, z: 0),
-                            sourceSize: MTLSize(width: w, height: h, depth: 1),
-                            to: drawable.texture,
-                            destinationSlice: 0, destinationLevel: 0,
-                            destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0))
+                             sourceSlice: 0, sourceLevel: 0,
+                             sourceOrigin: MTLOrigin(x: 0, y: 0, z: 0),
+                             sourceSize: MTLSize(width: w, height: h, depth: 1),
+                             to: drawable.texture,
+                             destinationSlice: 0, destinationLevel: 0,
+                             destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0))
             blitEncoder.endEncoding()
         }
     }
@@ -290,16 +292,24 @@ final class StimulusRenderer: NSObject, MTKViewDelegate, @unchecked Sendable {
 
     // MARK: - Control
 
-    func startTrial(stimulus: StimulusType, durationFrames: Int) {
+    private func transitionTo(_ newPhase: SessionPhase) {
+        phase = newPhase
+        phaseStartTime = CACurrentMediaTime()
+    }
+
+    func startTrial(stimulus: StimulusType, durationMs: Double) {
         centralStimulus = stimulus
-        stimulusDurationFrames = durationFrames
-        currentFrame = 0
-        phase = .fixation
+        stimulusDurationMs = durationMs
+        transitionTo(.fixation)
+    }
+
+    // Legacy: frame-based API for onboarding compatibility
+    func startTrial(stimulus: StimulusType, durationFrames: Int) {
+        startTrial(stimulus: stimulus, durationMs: Double(durationFrames) * (1000.0 / 60.0))
     }
 
     func showResponseFeedback(correct: Bool) {
         feedbackCorrect = correct
-        currentFrame = 0
-        phase = .feedback
+        transitionTo(.feedback)
     }
 }

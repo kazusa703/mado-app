@@ -33,7 +33,7 @@ final class SessionViewModel {
 
     init(taskType: Int = 1) {
         self.taskType = taskType
-        self.staircase = StaircaseEngine(taskType: taskType)
+        staircase = StaircaseEngine(taskType: taskType)
     }
 
     // MARK: - Session Control
@@ -148,7 +148,7 @@ final class SessionViewModel {
         UserSettings.shared.sessionsToday += 1
     }
 
-    var durationFrames: Int {
-        staircase.durationInFrames(refreshRate: 60)
+    var currentDurationMs: Double {
+        staircase.currentDurationMs
     }
 }

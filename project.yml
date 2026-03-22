@@ -52,3 +52,16 @@ targets:
     entitlements:
       path: MADO/Resources/MADO.entitlements
       properties: {}
+
+  MADOTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - MADOTests
+    dependencies:
+      - target: MADO
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/MADO.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MADO"
+        BUNDLE_LOADER: "$(TEST_HOST)"
